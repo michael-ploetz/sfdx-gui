@@ -1,3 +1,35 @@
+<script>
+  import Section from '../base/section.svelte';
+  import Spinner from '../base/spinner.svelte';
+  import OrgTile from './OrgTile.svelte';
+
+  let loading = false;
+
+  let devhubs = [];
+  let regulars = [];
+  let scratches = [];
+
+  const handleLoad = async () => {
+    loading = true;
+    const response = await fetch('/api/sfdx/org', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+    const orgs = await response.json();
+    devhubs = orgs.result.nonScratchOrgs.filter((org) => org.isDevHub);
+    regulars = orgs.result.nonScratchOrgs.filter((org) => !org.isDevHub);
+    scratches = orgs.result.scratchOrgs;
+
+    loading = false;
+  };
+</script>
+
+{#if loading}
+  <Spinner />
+{/if}
+
 <section
   role="dialog"
   tabindex="-1"
@@ -19,13 +51,13 @@
     <div
       class="slds-modal__header slds-grid slds-grid_align-spread slds-grid_vertical-align-center"
     >
-      <h2 id="header43" class="slds-text-heading_medium">App launcher</h2>
+      <h2 id="header43" class="slds-text-heading_medium">Org launcher</h2>
       <div class="slds-app-launcher__header-search">
         <div class="slds-form-element">
           <label
             for="app-launcher-search"
             class="slds-form-element__label slds-assistive-text"
-            >Find an app</label
+            >Find an org</label
           >
           <div
             class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left"
@@ -39,161 +71,54 @@
               type="search"
               class="slds-input"
               id="app-launcher-search"
-              placeholder="Find an app"
+              placeholder="Find an org"
             />
           </div>
         </div>
       </div>
-      <button class="slds-button slds-button_neutral">App Exchange</button>
+      <button class="slds-button slds-button_neutral" on:click={handleLoad}
+        >Load Orgs</button
+      >
     </div>
     <div
       class="slds-modal__content slds-app-launcher__content slds-p-around_medium"
       id="modal-content-id-1"
     >
-      <div class="slds-section slds-is-open">
-        <h3 class="slds-section__title">
-          <button
-            aria-controls="appsContent"
-            aria-expanded="true"
-            class="slds-button slds-section__title-action"
-          >
-            <svg
-              class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
-              aria-hidden="true"
+      <Section title="Dev Hubs">
+        <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+          {#each devhubs as devhub}
+            <li
+              class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-"
             >
-              <use
-                xlink:href="../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg#switch"
-              />
-            </svg>
-            <span class="slds-truncate" title="All Apps">All Apps</span>
-          </button>
-        </h3>
-        <div aria-hidden="false" class="slds-section__content" id="appsContent">
-          <div
-            class="slds-assistive-text"
-            id="drag-live-region"
-            aria-live="assertive"
-          />
-          <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+              <OrgTile {devhub} />
+            </li>
+          {/each}
+        </ul>
+      </Section>
+      <hr />
+      <Section title="Regular Orgs">
+        <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+          {#each regulars as regular}
             <li
               class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3"
             >
-              <div
-                draggable="true"
-                class="slds-app-launcher__tile slds-text-link_reset slds-is-draggable"
-              >
-                <div class="slds-app-launcher__tile-figure">
-                  <span class="slds-avatar slds-avatar_large">
-                    <abbr
-                      class="slds-avatar__initials slds-icon-custom-27"
-                      title="Sales Cloud">SC</abbr
-                    >
-                  </span>
-                  <div class="slds-m-top_xxx-small">
-                    <button
-                      class="slds-button slds-button_icon"
-                      aria-pressed="false"
-                      title="Reorder"
-                    >
-                      <svg class="slds-button__icon" aria-hidden="true">
-                        <use
-                          xlink:href="../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg#rows"
-                        />
-                      </svg>
-                      <span class="slds-assistive-text">Reorder</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="slds-app-launcher__tile-body">
-                  <a href="#">Sales Cloud</a>
-                  <p>
-                    The primary internal Salesforce org. Used to run our online
-                    sales business...
-                    <button
-                      aria-describedby="help-0"
-                      class="slds-button slds-button_reset slds-text-link"
-                      >More</button
-                    >
-                  </p>
-                  <div
-                    class="slds-popover slds-popover_tooltip slds-nubbin_top-right slds-hide"
-                    role="tooltip"
-                    id="help-0"
-                    style="position:absolute;top:80px;right:30px"
-                  >
-                    <div class="slds-popover__body" />
-                  </div>
-                </div>
-              </div>
+              <OrgTile {regular} />
             </li>
-          </ul>
-        </div>
-      </div>
+          {/each}
+        </ul>
+      </Section>
       <hr />
-      <div class="slds-section slds-is-open">
-        <h3 class="slds-section__title">
-          <button
-            aria-controls="itemsContent"
-            aria-expanded="true"
-            class="slds-button slds-section__title-action"
-          >
-            <svg
-              class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
-              aria-hidden="true"
-            >
-              <use
-                xlink:href="../../../node_modules/@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg#switch"
-              />
-            </svg>
-            <span class="slds-truncate" title="All Items">All Items</span>
-          </button>
-        </h3>
-        <div
-          aria-hidden="false"
-          class="slds-section__content"
-          id="itemsContent"
-        >
-          <ul class="slds-grid slds-wrap">
+      <Section title="Scratch Orgs">
+        <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+          {#each scratches as scratch}
             <li
-              class="slds-col_padded slds-p-vertical_xx-small slds-size_1-of-5"
+              class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3"
             >
-              <a href="#" class="slds-truncate" title="Accounts">Accounts</a>
+              <OrgTile {scratch} />
             </li>
-            <li
-              class="slds-col_padded slds-p-vertical_xx-small slds-size_1-of-5"
-            >
-              <a href="#" class="slds-truncate" title="Announcements"
-                >Announcements</a
-              >
-            </li>
-            <li
-              class="slds-col_padded slds-p-vertical_xx-small slds-size_1-of-5"
-            >
-              <a href="#" class="slds-truncate" title="Approvals">Approvals</a>
-            </li>
-            <li
-              class="slds-col_padded slds-p-vertical_xx-small slds-size_1-of-5"
-            >
-              <a href="#" class="slds-truncate" title="Campaigns">Campaigns</a>
-            </li>
-            <li
-              class="slds-col_padded slds-p-vertical_xx-small slds-size_1-of-5"
-            >
-              <a href="#" class="slds-truncate" title="Cases">Cases</a>
-            </li>
-            <li
-              class="slds-col_padded slds-p-vertical_xx-small slds-size_1-of-5"
-            >
-              <a href="#" class="slds-truncate" title="Coaching">Coaching</a>
-            </li>
-            <li
-              class="slds-col_padded slds-p-vertical_xx-small slds-size_1-of-5"
-            >
-              <a href="#" class="slds-truncate" title="Contacts">Contacts</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+          {/each}
+        </ul>
+      </Section>
     </div>
   </div>
 </section>
