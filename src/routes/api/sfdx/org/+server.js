@@ -1,4 +1,4 @@
-import { retrieveAllOrgs } from '../../../../lib/services/orgServices';
+import { retrieveAllOrgs } from '../../../../lib/server/services/orgServices.js';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ }) {

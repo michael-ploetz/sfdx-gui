@@ -9,7 +9,7 @@
   }
 </script>
 
-<div class={closed ? 'slds-section' : 'slds-section slds-is-open'}>
+<div class="slds-section" class:slds-is-open={opened}>
   <h3 class="slds-section__title">
     <button
       on:click={handleClick}

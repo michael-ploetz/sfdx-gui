@@ -1,12 +1,26 @@
 <script>
+  import { onMount } from 'svelte';
+  import { requestAllOrgs } from '../lib/client/services/orgServices';
   import OrgLauncher from '../lib/components/OrgLauncher.svelte';
+  import Spinner from '../lib/components/base/Spinner.svelte';
 
   let showOrgLauncher = false;
+
+  let loading = true;
+
+  onMount(async () => {
+    await requestAllOrgs();
+    loading = false;
+  });
 
   const handleOrglauncherOpen = () => {
     showOrgLauncher = true;
   };
 </script>
+
+{#if loading}
+  <Spinner />
+{/if}
 
 {#if showOrgLauncher}
   <OrgLauncher />

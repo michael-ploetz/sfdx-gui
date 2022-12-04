@@ -1,10 +1,10 @@
 <script>
-  export let devhub;
+  export let org;
 </script>
 
 <article class="slds-tile slds-box">
   <h3 class="slds-tile__title slds-truncate" title="Salesforce UX">
-    <a href={devhub.instanceUrl}>{devhub.instanceUrl}</a>
+    <a href={org.instanceUrl}>{org.instanceUrl}</a>
   </h3>
   <div class="slds-tile__detail">
     <dl class="slds-list_horizontal slds-wrap">
@@ -15,7 +15,7 @@
         orgId:
       </dt>
       <dd class="slds-item_detail slds-truncate" title="orgId">
-        {devhub.orgId}
+        {org.orgId}
       </dd>
       <dt
         class="slds-item_label slds-text-color_weak slds-truncate"
@@ -24,7 +24,7 @@
         status
       </dt>
       <dd class="slds-item_detail slds-truncate" title="status">
-        {devhub.connectedStatus}
+        {org.connectedStatus}
       </dd>
       <dt
         class="slds-item_label slds-text-color_weak slds-truncate"
@@ -33,7 +33,7 @@
         username
       </dt>
       <dd class="slds-item_detail slds-truncate" title="username">
-        {devhub.username}
+        {org.username}
       </dd>
     </dl>
   </div>
