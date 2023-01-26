@@ -1,18 +1,20 @@
 <script>
-  import Section from './base/Section.svelte';
-  import Spinner from './base/Spinner.svelte';
-  import Input from './base/Input.svelte';
-  import Button from './base/Button.svelte';
-  import OrgTile from './OrgTile.svelte';
+  import Section from '../base/Section.svelte';
+  import Spinner from '../base/Spinner.svelte';
+  import Input from '../base/Input.svelte';
+  import Button from '../base/Button.svelte';
+  import OrgTile from '../navigation/OrgTile.svelte';
 
-  import { devHubs, regularOrgs, scratchOrgs } from '../client/stores/orgs.js';
-  import { requestAllOrgs } from '../client/services/orgServices';
+  import { devHubs, regularOrgs, scratchOrgs } from '../../client/stores/orgs';
+  import { requestAllOrgs } from '../../client/services/orgServices';
+  import { requestAllAliases } from '../../client/services/aliasServices';
 
   let loading = false;
 
   const handleRefresh = async () => {
     loading = true;
     await requestAllOrgs();
+    await requestAllAliases();
     loading = false;
   };
 </script>
@@ -58,10 +60,12 @@
       id="modal-content-id-1"
     >
       <Section title="Dev Hubs">
-        <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+        <ul
+          class="slds-grid slds-grid_pull-padded slds-wrap slds-p-horizontal_small"
+        >
           {#each $devHubs as devHub}
             <li
-              class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3"
+              class="slds-p-horizontal_xx-small slds-p-vertical_xxx-small slds-size_1-of-1 slds-medium-size_1-of-3"
             >
               <OrgTile org={devHub} />
             </li>
@@ -70,10 +74,12 @@
       </Section>
       <hr />
       <Section title="Regular Orgs">
-        <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+        <ul
+          class="slds-grid slds-grid_pull-padded slds-wrap slds-p-horizontal_small"
+        >
           {#each $regularOrgs as regularOrg}
             <li
-              class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3"
+              class="slds-p-horizontal_xx-small slds-p-vertical_xxx-small slds-size_1-of-1 slds-medium-size_1-of-3"
             >
               <OrgTile org={regularOrg} />
             </li>
@@ -82,10 +88,12 @@
       </Section>
       <hr />
       <Section title="Scratch Orgs">
-        <ul class="slds-grid slds-grid_pull-padded slds-wrap">
+        <ul
+          class="slds-grid slds-grid_pull-padded slds-wrap slds-p-horizontal_small"
+        >
           {#each $scratchOrgs as scratchOrg}
             <li
-              class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3"
+              class="slds-p-horizontal_xx-small slds-p-vertical_xxx-small slds-size_1-of-1 slds-medium-size_1-of-3"
             >
               <OrgTile org={scratchOrg} />
             </li>

@@ -10,7 +10,7 @@ const requestAllOrgs = async () => {
 
     const results = await response.json();
 
-    allOrgs.set(results);
+    allOrgs.set(results.result);
 }
 
 export { requestAllOrgs }
