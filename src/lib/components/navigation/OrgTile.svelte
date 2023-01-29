@@ -2,10 +2,33 @@
   export let org;
   let hovered = false;
   import { allAliases } from '../../client/stores/aliases.js';
+  import { navigation } from '../../client/stores/navigation.js';
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <article
-  class="slds-tile slds-box "
+  class="slds-tile slds-box"
+  on:click={() => {
+    navigation.update((prev) => {
+      prev.tabs.find((tab) => tab.active).active = false;
+
+      prev.tabs.push({
+        orgId: org.orgId,
+        label:
+          $allAliases.find((alias) => alias.value === org.username)?.alias ||
+          org.username,
+        active: true,
+        subtabs: [],
+      });
+      return prev;
+    });
+    dispatch('orgselected', {
+      orgId: org.orgId,
+    });
+  }}
   class:hovered
   on:mouseenter={() => {
     hovered = true;
@@ -14,7 +37,6 @@
     hovered = false;
   }}
   style="cursor: pointer;"
-  ckass
 >
   <h3 class="slds-tile__title slds-truncate" title="Salesforce UX">
     <a href={org.instanceUrl}

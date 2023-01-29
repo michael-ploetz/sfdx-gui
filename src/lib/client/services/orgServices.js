@@ -13,4 +13,19 @@ const requestAllOrgs = async () => {
     allOrgs.set(results.result);
 }
 
-export { requestAllOrgs }
+const openOrg = async (username) => {
+    try {
+        const response = await fetch('/api/sfdx/org/' + username + '/open', {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+            },
+        });
+        const results = await response.json();
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
+
+export { requestAllOrgs, openOrg }
