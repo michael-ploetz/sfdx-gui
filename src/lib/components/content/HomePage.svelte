@@ -6,6 +6,10 @@
   <div>
     Todos
     <ul class="slds-list_dotted">
+      <li>
+        make Page component have layouting and slot capabilities, should not
+        happen in page
+      </li>
       <li>Overwork orgTile to be more beautiful</li>
       <li>give option for all/expired orgs</li>
       <li>add connection status to org views</li>
@@ -21,6 +25,7 @@
           <li>
             Home
             <ul class="slds-list_dotted">
+              <li>COnnection status</li>
               <li>Details of Devhub</li>
               <li>Scratch Org list on left side</li>
               <li>

@@ -49,7 +49,7 @@
   </div>
   <div class="slds-page-header__row slds-page-header__row_gutters">
     <div class="slds-page-header__col-details">
-      <slot name="details" />
+      <slot />
     </div>
   </div>
 </div>
