@@ -10,6 +10,7 @@
         make Page component have layouting and slot capabilities, should not
         happen in page
       </li>
+      <li>Make different oage types to incorporate scratch normal sandboxes, open scratch org as subtab</li>
       <li>Overwork orgTile to be more beautiful</li>
       <li>give option for all/expired orgs</li>
       <li>add connection status to org views</li>
