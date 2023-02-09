@@ -1,15 +1,15 @@
 <script>
   import { onMount } from 'svelte';
-  import { requestAllOrgs } from '../lib/client/services/orgServices';
-  import { requestAllAliases } from '../lib/client/services/aliasServices';
+  import { loadAllOrgs } from '../lib/client/stores/orgs';
+  import { loadAllAliases } from '../lib/client/stores/aliases';
   import Spinner from '../lib/components/base/Spinner.svelte';
   import Navigation from '../lib/components/navigation/Navigation.svelte';
 
   let loading = true;
 
   onMount(async () => {
-    await requestAllOrgs();
-    await requestAllAliases();
+    await loadAllOrgs();
+    await loadAllAliases();
     loading = false;
   });
 </script>

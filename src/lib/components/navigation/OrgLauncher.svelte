@@ -6,16 +6,15 @@
   import OrgTile from '../navigation/OrgTile.svelte';
 
   import { devHubs, regularOrgs, scratchOrgs } from '../../client/stores/orgs';
-  import { requestAllOrgs } from '../../client/services/orgServices';
-  import { requestAllAliases } from '../../client/services/aliasServices';
+  import { loadAllAliases } from '../../client/stores/aliases';
 
   let loading = false;
   let showOrgLauncher = false;
 
   const handleRefresh = async () => {
     loading = true;
-    await requestAllOrgs();
-    await requestAllAliases();
+    await loadAllOrgs();
+    await loadAllAliases();
     loading = false;
   };
 </script>
