@@ -1,7 +1,7 @@
 <script>
-  import DevHubPage from './types/DevHubPage.svelte';
-  import SandboxPage from './types/SandboxPage.svelte';
-  import ScratchOrgPage from './types/ScratchOrgPage.svelte';
+  import DevHubPage from './devhub/DevHubPage.svelte';
+  import SandboxPage from './sandbox/SandboxPage.svelte';
+  import ScratchOrgPage from './scratchorg/ScratchOrgPage.svelte';
 
   import { allOrgs } from '../../client/stores/orgs';
 
@@ -11,14 +11,9 @@
 </script>
 
 {#if org.isDevHub}
-  lol
   <DevHubPage {orgId} />
 {:else if org.isSandbox}
-  lol2
-
   <SandboxPage {orgId} />
 {:else if org.isScratchOrg}
-  lol3
-
   <ScratchOrgPage {orgId} />
 {/if}

@@ -6,7 +6,6 @@
   import OrgPage from '../content/OrgPage.svelte';
 
   const handleTabOpen = (event) => {
-    console.log(event.target.id);
     navigation.update((prev) => {
       prev.tabs.find((tab) => tab.active).active = false;
       prev.tabs.find((tab) => tab.orgId === event.target.id).active = true;
