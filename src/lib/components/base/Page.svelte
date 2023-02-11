@@ -4,11 +4,20 @@
 </script>
 
 <div style="padding: 12px;">
-  <Layout gutters wrap>
-    <LayoutItem size="12" additionalClasses="region-header">
+  <slot />
+  <Layout wrap>
+    <LayoutItem
+      size="12"
+      additionalStyles="padding-bottom: 12px;"
+      additionalClasses="region-header"
+    >
       <slot name="header" />
     </LayoutItem>
-    <LayoutItem size="4" additionalClasses="region-sidebar-left">
+    <LayoutItem
+      size="4"
+      additionalStyles="padding-right: 12px;"
+      additionalClasses="region-sidebar-left"
+    >
       <slot name="sidebar" />
     </LayoutItem>
     <LayoutItem size="8" additionalClasses="region-main">

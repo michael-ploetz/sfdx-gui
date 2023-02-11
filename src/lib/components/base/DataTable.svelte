@@ -15,6 +15,7 @@
 </script>
 
 <table
+  style="table-layout: fixed;"
   class="slds-table slds-table_cell-buffer"
   class:slds-table_bordered={bordered}
 >
