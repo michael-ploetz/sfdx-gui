@@ -47,7 +47,6 @@ export const openOrg = async (username) => {
             },
         });
         const results = await response.json();
-        console.log(results);
         return true;
     } catch (err) {
         return false;
