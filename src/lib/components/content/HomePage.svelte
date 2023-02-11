@@ -7,10 +7,21 @@
     Todos
     <ul class="slds-list_dotted">
       <li>
+        force:package:version:create:list / :report gives current running builds
+        in for the devhub, incorporate it into the devhub page
+      </li>
+      <li>
+        Rebuild backend, make builder pattern for commands, functional, not just
+        raw calls
+      </li>
+      <li>
         make Page component have layouting and slot capabilities, should not
         happen in page
       </li>
-      <li>Make different oage types to incorporate scratch normal sandboxes, open scratch org as subtab</li>
+      <li>
+        Make different oage types to incorporate scratch normal sandboxes, open
+        scratch org as subtab
+      </li>
       <li>Overwork orgTile to be more beautiful</li>
       <li>give option for all/expired orgs</li>
       <li>add connection status to org views</li>
