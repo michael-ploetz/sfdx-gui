@@ -1,11 +1,10 @@
 <script>
   import PageHeader from '../../base/PageHeader.svelte';
   import Button from '../../base/Button.svelte';
-  import Toasts from '../../base/Toasts.svelte';
-  import { addToast } from '../../../client/stores/toasts';
+  import { addToast } from '../../../stores/toasts';
 
-  import { devHubs, openOrg } from '../../../client/stores/orgs';
-  import { allAliases } from '../../../client/stores/aliases';
+  import { devHubs, openOrg } from '../../../stores/orgs';
+  import { allAliases } from '../../../stores/aliases';
 
   export let orgId;
 
@@ -29,8 +28,6 @@
     $allAliases.find((alias) => alias.value === org.username)?.alias ||
     org.username;
 </script>
-
-<Toasts />
 
 <PageHeader title={orgName} meta="DevHub" icon="environment_hub">
   <div slot="actions">

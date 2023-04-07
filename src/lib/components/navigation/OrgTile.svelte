@@ -1,34 +1,54 @@
 <script>
   export let org;
   let hovered = false;
-  import { allAliases } from '../../client/stores/aliases.js';
-  import { navigation } from '../../client/stores/navigation.js';
+  import { allAliases } from '../../stores/aliases.js';
+  import {
+    activateSubtab,
+    activateTab,
+    addSubtab,
+    addTab,
+    deactivateActiveTab,
+    deactivateSubtab,
+  } from '../../stores/navigation.js';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();
+
+  const handleOrgClick = () => {
+    if (org.isScratchOrg) {
+      addTab(
+        $allAliases.find((alias) => alias.value === org.devHubUsername)
+          ?.alias || org.devHubUsername,
+        org.devHubOrgId
+      );
+      deactivateActiveTab();
+      activateTab(org.devHubOrgId);
+      addSubtab(
+        org.orgId,
+        $allAliases.find((alias) => alias.value === org.username)?.alias ||
+          org.username
+      );
+      deactivateSubtab();
+      activateSubtab(org.orgId);
+    } else {
+      addTab(
+        $allAliases.find((alias) => alias.value === org.username)?.alias ||
+          org.username,
+        org.orgId
+      );
+      deactivateActiveTab();
+
+      activateTab(org.orgId);
+    }
+
+    dispatch('orgselected', {});
+  };
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <article
   class="slds-tile slds-box"
-  on:click={() => {
-    navigation.update((prev) => {
-      prev.tabs.find((tab) => tab.active).active = false;
-
-      prev.tabs.push({
-        orgId: org.orgId,
-        label:
-          $allAliases.find((alias) => alias.value === org.username)?.alias ||
-          org.username,
-        active: true,
-        subtabs: [],
-      });
-      return prev;
-    });
-    dispatch('orgselected', {
-      orgId: org.orgId,
-    });
-  }}
+  on:click={handleOrgClick}
   class:hovered
   on:mouseenter={() => {
     hovered = true;

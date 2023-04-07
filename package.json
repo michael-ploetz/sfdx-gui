@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"tauri": "tauri",
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
@@ -11,6 +12,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
+		"@tauri-apps/cli": "^1.2.3",
 		"eslint": "^8.16.0",
 		"eslint-plugin-svelte3": "^4.0.0",
 		"svelte": "^3.44.0",
@@ -19,6 +21,7 @@
 	"type": "module",
 	"dependencies": {
 		"@salesforce-ux/design-system": "^2.19.0",
+		"@tauri-apps/api": "^1.2.0",
 		"sfdx-node": "^3.7.0"
 	}
 }

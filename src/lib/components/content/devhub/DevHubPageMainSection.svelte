@@ -3,7 +3,7 @@
   import Tab from '../../base/Tab.svelte';
   import Tabs from '../../base/Tabs.svelte';
   import DevHubPageSidebar from './DevHubPageSidebar.svelte';
-  import PackageOverview from './PackageOverview.svelte';
+  import DevHubPackageOverview from './DevHubPackageOverview.svelte';
 
   export let orgId;
 
@@ -27,7 +27,7 @@
       id="packageTab"
       label="Package Overview"
     >
-      <PackageOverview {orgId} />
+      <DevHubPackageOverview {orgId} />
     </Tab>
 
     <Tab bind:this={orgTab} on:register={tabs.register} id="orgTab" label="Orgs"

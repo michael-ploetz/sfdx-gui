@@ -3,7 +3,7 @@
   import SandboxPage from './sandbox/SandboxPage.svelte';
   import ScratchOrgPage from './scratchorg/ScratchOrgPage.svelte';
 
-  import { allOrgs } from '../../client/stores/orgs';
+  import { allOrgs } from '../../stores/orgs';
 
   export let orgId;
 

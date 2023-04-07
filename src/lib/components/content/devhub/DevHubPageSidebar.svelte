@@ -1,8 +1,8 @@
 <script>
   import DataTable from '../../base/DataTable.svelte';
 
-  import { devHubs, scratchOrgs } from '../../../client/stores/orgs';
-  import { allAliases } from '../../../client/stores/aliases';
+  import { devHubs, scratchOrgs } from '../../../stores/orgs';
+  import { allAliases } from '../../../stores/aliases';
 
   export let orgId;
 

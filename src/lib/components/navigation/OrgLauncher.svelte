@@ -5,16 +5,20 @@
   import Button from '../base/Button.svelte';
   import OrgTile from '../navigation/OrgTile.svelte';
 
-  import { devHubs, regularOrgs, scratchOrgs } from '../../client/stores/orgs';
-  import { loadAllAliases } from '../../client/stores/aliases';
+  import {
+    devHubs,
+    regularOrgs,
+    scratchOrgs,
+    loadAllOrgs,
+  } from '../../stores/orgs';
+  import { loadAllAliases } from '../../stores/aliases';
 
   let loading = false;
   let showOrgLauncher = false;
 
   const handleRefresh = async () => {
     loading = true;
-    await loadAllOrgs();
-    await loadAllAliases();
+    await loadAllOrgs({ skipServerCache: true, skipClientCache: true });
     loading = false;
   };
 </script>

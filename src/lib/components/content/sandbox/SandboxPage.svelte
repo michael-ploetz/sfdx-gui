@@ -2,12 +2,11 @@
   import Page from '../../base/Page.svelte';
   import PageHeader from '../../base/PageHeader.svelte';
 
-  import { devHubs, openOrg, scratchOrgs } from '../../../client/stores/orgs';
-  import { allAliases } from '../../../client/stores/aliases';
+  import { devHubs, openOrg, scratchOrgs } from '../../../stores/orgs';
+  import { allAliases } from '../../../stores/aliases';
   import Button from '../../base/Button.svelte';
 
-  import Toasts from '../../base/Toasts.svelte';
-  import { addToast } from '../../../client/stores/toasts';
+  import { addToast } from '../../../stores/toasts';
   import DataTable from '../../base/DataTable.svelte';
 
   export let orgId;
@@ -85,8 +84,6 @@
     },
   ];
 </script>
-
-<Toasts />
 
 <Page>
   <div slot="header">

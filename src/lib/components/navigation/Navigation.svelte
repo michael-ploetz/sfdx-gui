@@ -1,16 +1,26 @@
 <script>
   import OrgLauncher from './OrgLauncher.svelte';
   import HomePage from '../content/HomePage.svelte';
+  import ContentPage from '../content/ContentPage.svelte';
 
-  import { navigation } from '../../client/stores/navigation';
-  import OrgPage from '../content/OrgPage.svelte';
+  import {
+    activateSubtab,
+    activateTab,
+    activeSubtab,
+    activeTab,
+    deactivateActiveTab,
+    deactivateSubtab,
+    tabs,
+  } from '../../stores/navigation';
 
   const handleTabOpen = (event) => {
-    navigation.update((prev) => {
-      prev.tabs.find((tab) => tab.active).active = false;
-      prev.tabs.find((tab) => tab.orgId === event.target.id).active = true;
-      return prev;
-    });
+    deactivateActiveTab();
+    activateTab(event.target.id);
+  };
+
+  const handleSubTabOpen = (event) => {
+    deactivateSubtab();
+    activateSubtab(event.target.id);
   };
 </script>
 
@@ -19,16 +29,24 @@
 
   <nav class="slds-context-bar__secondary">
     <ul class="slds-grid">
-      {#each $navigation.tabs as tab}
+      {#each $tabs as tab}
         <li
           id={tab.orgId}
           on:click={handleTabOpen}
           class="slds-context-bar__item"
           class:slds-is-active={tab.active}
         >
-          <a id={tab.orgId} class="slds-context-bar__label-action" title="Home">
-            <span id={tab.orgId} class="slds-truncate" title={tab.label}
-              >{tab.label}</span
+          <a
+            id={tab.orgId}
+            on:click={handleTabOpen}
+            class="slds-context-bar__label-action"
+            title="Home"
+          >
+            <span
+              id={tab.orgId}
+              on:click={handleTabOpen}
+              class="slds-truncate"
+              title={tab.label}>{tab.label}</span
             >
           </a>
         </li>
@@ -36,11 +54,43 @@
     </ul>
   </nav>
 </div>
+{#if $activeTab.subtabs.length > 1}
+  <div style="background: white;" class="slds-show" role="tabpanel">
+    <div class="slds-tabs_default slds-sub-tabs">
+      <ul class="slds-tabs_default__nav" role="tablist">
+        {#each $activeTab.subtabs as subtab}
+          <li
+            on:click={handleSubTabOpen}
+            id={subtab.id}
+            class:slds-active={subtab.active}
+            class="slds-tabs_default__item slds-sub-tabs__item slds-grid slds-grid_vertical-align-center"
+            role="presentation"
+          >
+            <a
+              class="slds-tabs_default__link slds-p-horizontal_xx-small"
+              on:click={handleSubTabOpen}
+              id={subtab.id}
+              role="tab"
+              tabindex="0"
+              title={subtab.label}
+            >
+              <span class="slds-indicator-container" />
+              <span
+                on:click={handleSubTabOpen}
+                id={subtab.id}
+                class="slds-truncate"
+                title={subtab.label}>{subtab.label}</span
+              >
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+  </div>
+{/if}
 
-{#if $navigation.tabs.find((tab) => tab.active).orgId === 'home'}
+{#if $activeTab.orgId === 'home'}
   <HomePage />
 {:else}
-  <div>
-    <OrgPage orgId={$navigation.tabs.find((tab) => tab.active).orgId} />
-  </div>
+  <ContentPage id={$activeSubtab.id} />
 {/if}

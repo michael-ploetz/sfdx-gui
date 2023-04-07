@@ -1,12 +1,22 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
+
   export let data = [];
   export let columns = [];
 
   $: rows = data.map((datarow) => {
-    let newRow = [];
+    let newRow = {
+      cells: [],
+      rawRow: datarow,
+    };
     columns.forEach((column) => {
       const fieldData = datarow[column.value];
-      newRow.push(fieldData || '');
+      newRow.cells.push({
+        ...column,
+        value: fieldData || '',
+      });
     });
     return newRow;
   });
@@ -33,9 +43,21 @@
   <tbody>
     {#each rows as row}
       <tr class="slds-hint-parent">
-        {#each row as cell}
-          <td data-label="todo">
-            <div class="slds-truncate" title={cell}>{cell}</div>
+        {#each row.cells as cell}
+          <td data-label={cell.value}>
+            {#if cell.type === 'link'}
+              <div class="slds-truncate" title={cell.value}>
+                <a
+                  on:click={() => {
+                    const rawRow = row.rawRow;
+                    dispatch(cell.actionDetails.name, { rawRow, cell });
+                  }}
+                  tabindex="-1">{cell.value}</a
+                >
+              </div>
+            {:else}
+              <div class="slds-truncate" title={cell.value}>{cell.value}</div>
+            {/if}
           </td>
         {/each}
       </tr>
