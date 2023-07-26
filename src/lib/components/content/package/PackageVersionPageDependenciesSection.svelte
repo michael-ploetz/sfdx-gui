@@ -27,7 +27,7 @@
   <Section title="Dependency List">
     <PackageVersionPageDependenciesList {packageId} />
   </Section>
-  <Section title="Dependency Tree">
+  <Section title="Dependency Tree" closed>
     <PackageVersionPageDependenciesTree {packageId} />
   </Section>
   <Section title="Dependency Diagram" closed>you really wanna do this?</Section>
